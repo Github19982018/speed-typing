@@ -1,0 +1,15 @@
+span.active{
+    background-color:rgb(61, 201, 201);
+}
+
+span.inactive {
+    background-color:rgb(100, 115, 131);
+}
+
+span.red {
+    color:red;
+}
+
+span.green {
+   color:rgb(1, 255, 1);
+}
