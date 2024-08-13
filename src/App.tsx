@@ -6,8 +6,8 @@ import { Container } from "./components/Container";
 import { useState } from "react";
 
 function App() {
-    const [timer,setTimer] = useState<number>(0);
-    const [level,setLevel] = useState<string>('')
+    const [timer,setTimer] = useState<number>(1);
+    const [level,setLevel] = useState<string>('easy')
   return (
     <>
       <Container>

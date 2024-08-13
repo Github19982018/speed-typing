@@ -18,25 +18,27 @@ export const Play = ({timer=1, level}:{timer:number;level:string;}) => {
     const contentRef = useRef()
     const [start, setStart] = useState<boolean>(false);
     const [input, setInput] = useState('')
-    const [out,setOut] = useState<object>({wpm:null,accr:null});
+    let o = {wpm:0,accr:0};
     
     const content = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim doloribus natus quasi pariatur praesentium, nam dolor culpa asperiores.Hic cum porro dolores voluptatem quia libero impedit maxime quibusdam quo odio."
     const span = useRef(content.split('').map((val,index)=>{
       return {val:val,id:index,className:"inactive"}
     }));
 
-    
-    useEffect(() => { 
-         if (time ==  0) {
-            clearInterval(timeRef.current);
-            inputRef.current.disabled=true;
-            setOut({wpm:input.length/5/(t/60),accr:accuracy(content.split(''), input.split(''))});
-
-         }
-         
-    },[time,t,input])
+  
+    if (time ==  0) {
+      clearInterval(timeRef.current);
+      inputRef.current.disabled=true;
+      // setOut({wpm:input.length/5/(t/60),accr:accuracy(content.split(''), input.split(''))})}
+      o = {wpm:input.length/5/(t/60),accr:accuracy(content.split(''), input.split(''))}
+    }
 
     const changeHandler = (e) => {
+      let pos = inputRef.current.selectionStart;
+      contentRef.current.scrollTo({
+        left: pos*10,
+        behavior: "smooth",
+      });
       setInput(e.target.value);
       const inputArray = e.target.value.split('');
       span.current[inputArray.length].className=='inactive'?span.current[inputArray.length].className='active':span.current[inputArray.length].className='inactive';span.current[inputArray.length+1].className='inactive';
@@ -49,6 +51,10 @@ export const Play = ({timer=1, level}:{timer:number;level:string;}) => {
     }
 
     const againHandler = () => {
+      contentRef.current.scrollTo({
+        left: 0,
+        behavior: "smooth",
+      });
         clearInterval(timeRef.current);
         setTime(t);
         setStart(false);
@@ -70,9 +76,9 @@ export const Play = ({timer=1, level}:{timer:number;level:string;}) => {
        <input ref={inputRef} onChange={changeHandler} value={input} title="type here" type="text" autoFocus/>
        <button onClick={againHandler}>Again</button>
       Play
-      {out.wpm>0&&<h2>{out.wpm}</h2>}
-      {out.accr>0&&<h2>{out.accr+'%'}</h2>}
+      {o.wpm>0&&<h2>{o.wpm}</h2>}
+      {o.accr>0&&<h2>{o.accr+'%'}</h2>}
       
     </div>
   )
-}
+    }

@@ -1,16 +1,10 @@
 
-import { useEffect } from "react";
 import Link from "../../components/Link"
 
 
 export const Landing = ({setLevel,setTimer}:
   {setLevel: React.Dispatch<React.SetStateAction<string>>;
     setTimer:  React.Dispatch<React.SetStateAction<number>>;}) => {
-
-    useEffect(() => {
-      setLevel('easy');
-      setTimer(1);
-    },[setLevel,setTimer])
 
     const timeHandler = (e) => {
       setTimer(e.target.value);
